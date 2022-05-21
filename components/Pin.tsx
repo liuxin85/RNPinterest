@@ -1,36 +1,43 @@
 import { View, StyleSheet, Image, Text, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const Pin = (props) => {
-  const { image, title } = props.pin;
+  const { id, image, title } = props.pin;
 
   const [ratio, setRatio] = useState(1);
-
-  const onLike = () => {};
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (image) {
       Image.getSize(image, (width, height) => setRatio(width / height));
     }
   }, [image]);
+  const onLike = () => {};
+
+  const goToPinPage = () => {
+    navigation.navigate("Pin", { id });
+  };
   return (
-    <View style={styles.pin}>
-      <View>
-        <Image
-          source={{
-            uri: image,
-          }}
-          style={[styles.image, { aspectRatio: ratio }]}
-        />
-        <Pressable onPress={onLike} style={styles.heartBtn}>
-          <AntDesign name="hearto" size={16} color="black" />
-        </Pressable>
+    <Pressable onPress={goToPinPage} style={styles.pin}>
+      <View style={styles.pin}>
+        <View>
+          <Image
+            source={{
+              uri: image,
+            }}
+            style={[styles.image, { aspectRatio: ratio }]}
+          />
+          <Pressable onPress={onLike} style={styles.heartBtn}>
+            <AntDesign name="hearto" size={16} color="black" />
+          </Pressable>
+        </View>
+        <Text style={styles.title} numberOfLines={2}>
+          {title}
+        </Text>
       </View>
-      <Text style={styles.title} numberOfLines={2}>
-        {title}
-      </Text>
-    </View>
+    </Pressable>
   );
 };
 
