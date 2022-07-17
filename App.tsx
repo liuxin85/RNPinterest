@@ -11,7 +11,7 @@ export default function App() {
   } else {
     return (
       <View>
-        <Text>Hello</Text>
+        <Text>Hello, World</Text>
       </View>
     );
   }
